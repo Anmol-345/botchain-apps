@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Sora:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+/* ============================================================
+   SHINOBI — Jade Green Stealth / Dark Cyber-Ninja Aesthetic
+   ============================================================ */
+
+:root {
+  --bg-void:     #020804;
+  --bg-shadow:   #050f07;
+  --bg-blade:    rgba(5, 15, 8, 0.88);
+  --jade:        #10b981;
+  --jade-bright: #34d399;
+  --jade-cold:   #6ee7b7;
+  --jade-deep:   #064e3b;
+  --jade-glow:   rgba(16, 185, 129, 0.2);
+  --jade-border: rgba(16, 185, 129, 0.22);
+  --teal-trace:  #0d9488;
+  --text-pale:   #d1fae5;
+  --text-fog:    #4b7358;
+  --text-ghost:  #1f3d2a;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg-void);
+  color: var(--text-pale);
+  font-family: 'Sora', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Diagonal slash texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 30px,
+    rgba(16,185,129,0.012) 30px,
+    rgba(16,185,129,0.012) 31px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Jade mist rising from bottom */
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -100px;
+  left: 0; right: 0;
+  height: 500px;
+  background: linear-gradient(to top,
+    rgba(16,185,129,0.06) 0%,
+    rgba(13,148,136,0.03) 40%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-void); }
+::-webkit-scrollbar-thumb { background: var(--jade-deep); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--jade); }
+
+/* ---- Panels ---- */
+.blade-panel {
+  background: var(--bg-blade);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(16,185,129,0.12);
+  border-left: 3px solid rgba(16,185,129,0.5);
+}
+
+.blade-panel-glow {
+  background: rgba(3, 12, 6, 0.92);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--jade-border);
+  border-left: 3px solid var(--jade);
+  box-shadow:
+    -4px 0 20px rgba(16,185,129,0.12),
+    0 0 40px rgba(16,185,129,0.06),
+    inset 0 0 30px rgba(16,185,129,0.03);
+}
+
+/* ---- Text ---- */
+.jade-text {
+  background: linear-gradient(135deg, #d1fae5 0%, #34d399 50%, #0d9488 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Japanese-inspired diagonal clip ---- */
+.clip-slash {
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 92% 100%, 0 100%);
+}
+
+.clip-slash-sm {
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 96% 100%, 0 100%);
+}
+
+/* ---- Animations ---- */
+@keyframes fadeSlash {
+  from { opacity:0; transform: translateX(-20px) skewX(-5deg); }
+  to   { opacity:1; transform: translateX(0)    skewX(0deg); }
+}
+.fade-slash { animation: fadeSlash 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes jadeFlicker {
+  0%, 100% { text-shadow: 0 0 8px rgba(16,185,129,0.6); }
+  50%       { text-shadow: 0 0 20px rgba(52,211,153,0.9), 0 0 40px rgba(16,185,129,0.4); }
+}
+.jade-flicker { animation: jadeFlicker 3s ease-in-out infinite; }
+
+@keyframes scanDown {
+  from { transform: translateY(-100%); opacity: 0.6; }
+  to   { transform: translateY(1000%); opacity: 0; }
+}
+.scan-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(16,185,129,0.6), transparent);
+  animation: scanDown 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.fade-up { animation: fadeUp 0.7s ease both; }
+
+@keyframes jadePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+}
+.jade-pulse { animation: jadePulse 2s ease-in-out infinite; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 2s linear infinite; }
+
+/* ---- Shuriken / shape ---- */
+@keyframes shurikenSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.shuriken { animation: shurikenSpin 8s linear infinite; }
+
+/* ---- Bamboo stripe pattern ---- */
+.bamboo-stripe {
+  background-image:
+    linear-gradient(rgba(16,185,129,0.04) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(16,185,129,0.02) 1px, transparent 1px);
+  background-size: 60px 60px, 60px 60px;
+}
+
+/* ---- Input jade ---- */
+.input-jade {
+  background: rgba(2, 8, 4, 0.95);
+  border: 1px solid rgba(16,185,129,0.2);
+  border-left: 3px solid rgba(16,185,129,0.5);
+  color: var(--jade-cold);
+  font-family: 'Fira Code', monospace;
+  padding: 10px 14px;
+  font-size: 12px;
+  outline: none;
+  transition: all 0.25s;
+  width: 100%;
+}
+.input-jade:focus {
+  border-color: var(--jade);
+  border-left-color: var(--jade-bright);
+  box-shadow: 0 0 0 2px rgba(16,185,129,0.12);
+}
+.input-jade::placeholder { color: var(--text-ghost); }
+
+/* ---- Button jade ---- */
+.btn-jade {
+  background: linear-gradient(135deg, #065f46, #10b981);
+  color: #d1fae5;
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.04em;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 95% 100%, 0 100%);
+}
+.btn-jade:hover {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  box-shadow: 0 4px 25px rgba(16,185,129,0.35);
+  transform: translateY(-1px);
+}
+.btn-jade:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+/* ---- Button ghost jade ---- */
+.btn-ghost-jade {
+  background: rgba(16,185,129,0.07);
+  color: #6ee7b7;
+  border: 1px solid rgba(16,185,129,0.28);
+  border-left: 2px solid var(--jade);
+  font-family: 'Sora', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-ghost-jade:hover {
+  background: rgba(16,185,129,0.14);
+  border-color: var(--jade-bright);
+  box-shadow: inset -2px 0 10px rgba(16,185,129,0.1);
+}
+
+/* ---- Badge jade ---- */
+.badge-jade {
+  background: rgba(16,185,129,0.1);
+  border: 1px solid rgba(16,185,129,0.28);
+  border-left: 3px solid var(--jade);
+  color: var(--jade-cold);
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  padding: 3px 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---- Tab active jade ---- */
+.tab-jade-active {
+  background: rgba(16,185,129,0.12);
+  border: 1px solid rgba(16,185,129,0.4);
+  border-left: 3px solid var(--jade-bright);
+  color: #6ee7b7;
+}
+
+/* ---- Mono font util ---- */
+.mono-jade { font-family: 'Fira Code', monospace; }
+
+/* ---- Claimed badge ---- */
+.claimed-badge {
+  background: rgba(16,185,129,0.06);
+  border: 1px solid rgba(16,185,129,0.15);
+  color: var(--text-fog);
+  font-size: 11px;
+  padding: 4px 10px;
+  font-family: 'Fira Code', monospace;
+}
+
+/* ---- Status line ---- */
+.status-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--jade), var(--teal-trace), transparent);
+  opacity: 0.5;
+}
+
+/* ---- Select jade ---- */
+select.input-jade {
+  appearance: none;
+  cursor: pointer;
+}
